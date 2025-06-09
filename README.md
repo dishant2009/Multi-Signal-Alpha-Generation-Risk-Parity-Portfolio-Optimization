@@ -1,1 +1,1 @@
-# Bull-Market-Support-Band-Based-Autotrader-Strategy
+# Multi Signal Alpha Generation Risk Parity Portfolio Optimization

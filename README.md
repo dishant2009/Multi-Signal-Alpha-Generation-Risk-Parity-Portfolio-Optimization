@@ -46,3 +46,58 @@ alpha-system/
 - PostgreSQL 14+
 - Redis 7+
 - (Optional) Kubernetes cluster for production deployment
+
+
+### Quick Start
+
+1. Clone the repository:
+```bash
+git clone https://github.com/dishant2009/Multi-Signal-Alpha-Generation-Risk-Parity-Portfolio-Optimization.git
+cd alpha-system
+```
+
+2. Copy environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your API keys and credentials
+```
+
+3. Build and start services:
+```bash
+make build
+make deploy
+```
+
+4. Access the services:
+- Main Application: http://localhost:8000
+- Airflow UI: http://localhost:8081
+- Monitoring Dashboard: http://localhost:8080
+- Grafana: http://localhost:3000
+- Jupyter Lab: http://localhost:8888
+
+## Configuration
+
+The system is configured via `config.yaml`:
+
+```yaml
+data:
+  universe:
+    method: "market_cap"
+    top_n: 500
+    
+portfolio:
+  optimization:
+    method: "hierarchical_risk_parity"
+    constraints:
+      max_position: 0.05
+      
+  risk_targets:
+    volatility: 0.12
+    max_drawdown: 0.15
+    
+monitoring:
+  alerts:
+    drawdown_threshold: 0.10
+    sharpe_decline: 0.5
+```
+

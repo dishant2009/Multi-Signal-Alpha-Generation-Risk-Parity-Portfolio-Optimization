@@ -100,4 +100,58 @@ monitoring:
     drawdown_threshold: 0.10
     sharpe_decline: 0.5
 ```
+## Usage
+
+### Running Backtests
+
+```python
+from alpha_system import BacktestingEngine, DataLoader
+
+# Initialize
+data_loader = DataLoader(start_date='2015-01-01', end_date='2023-12-31')
+engine = BacktestingEngine(data_loader)
+
+# Run backtest
+results = engine.run_backtest(
+    tickers=['AAPL', 'MSFT', 'GOOGL', ...],
+    rebalance_freq='M',
+    transaction_cost=0.001
+)
+
+# Visualize results
+engine.plot_results()
+```
+
+### Generating Signals
+
+```python
+from alpha_system.signals import AlphaSignals, SignalCombiner
+
+# Generate individual signals
+alpha_gen = AlphaSignals(returns, prices)
+signals = {
+    'momentum': alpha_gen.momentum_12_1(),
+    'quality': alpha_gen.quality_score(),
+    'volatility': alpha_gen.volatility_risk_premium()
+}
+
+# Combine with IC weighting
+combiner = SignalCombiner(returns)
+combined_signals = combiner.calculate_ic_weighted_signals(signals)
+```
+
+### Portfolio Optimization
+
+```python
+from alpha_system.portfolio import PortfolioOptimizer
+
+# Initialize optimizer
+optimizer = PortfolioOptimizer(returns, alpha_signals)
+
+# Run optimization
+weights = optimizer.hierarchical_risk_parity()
+
+# Or use Black-Litterman
+weights = optimizer.black_litterman_optimization(market_caps)
+```
 
